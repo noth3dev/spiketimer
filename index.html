@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>45초 타이머</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            transition: background-color 0.5s;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #timer {
+            font-size: 96px;
+            cursor: pointer;
+        }
+        #distance {
+            font-size: 48px;
+            margin-top: 20px;
+        }
+        .warning {
+            animation: blink-bg 1s infinite;
+        }
+        @keyframes blink-bg {
+            0% { background-color: #f0f0f0; }
+            50% { background-color: #ff0000; }
+            100% { background-color: #f0f0f0; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div id="timer">SPIKE PLANTED</div>
+    <div id="distance"></div>
+</div>
+
+<script>
+    let timerInterval;
+    let remainingTime = 45;
+    let isRunning = false;
+
+    document.body.addEventListener('click', toggleTimer);
+
+    function toggleTimer() {
+        if (isRunning) {
+            stopTimer();
+        } else {
+            startTimer();
+        }
+    }
+
+    function startTimer() {
+        if (isRunning) return;
+
+        isRunning = true;
+        remainingTime = 45;
+        document.body.classList.remove('warning');
+
+        timerInterval = setInterval(() => {
+            remainingTime -= 0.01;
+            updateTimerDisplay();
+
+            if (remainingTime <= 7) {
+                document.body.classList.add('warning');
+            } else {
+                document.body.classList.remove('warning');
+            }
+
+            if (remainingTime <= 0) {
+                stopTimer();
+            }
+        }, 10);
+
+        updateTimerDisplay();
+    }
+
+    function stopTimer() {
+        clearInterval(timerInterval);
+        isRunning = false;
+        remainingTime = 45;
+        document.getElementById('timer').textContent = 'SPIKE PLANTED';
+        document.body.classList.remove('warning');
+        document.getElementById('distance').textContent = '';
+    }
+
+    function updateTimerDisplay() {
+        document.getElementById('timer').textContent = remainingTime.toFixed(2);
+        const distance = (45 - remainingTime) * 6.75;
+        document.getElementById('distance').textContent = `${distance.toFixed(1)}m`;
+    }
+</script>
+</body>
+</html>
+
