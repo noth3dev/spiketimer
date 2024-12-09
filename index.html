@@ -95,7 +95,7 @@
 
     function updateTimerDisplay() {
         document.getElementById('timer').textContent = remainingTime.toFixed(2);
-        const distance = (45 - remainingTime) * 6.75;
+        const distance = (remainingTime) * 6.75;
         document.getElementById('distance').textContent = `${distance.toFixed(1)}m`;
     }
 </script>
